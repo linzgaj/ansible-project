@@ -1,0 +1,8 @@
+---
+hosts: all
+become: true
+tasks:
+  - name: Install nginx
+    dnf:
+      name: nginx
+      state: present
