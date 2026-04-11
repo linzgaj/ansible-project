@@ -15,10 +15,6 @@
       dnf:
         name: /etc/yum.repos.d/microsoft-prod.repo
         state: present
-    - name: Remove the Microsoft RedHat repository package file
-      file:
-        path: /etc/yum.repos.d/microsoft-prod.repo
-        state: absent
     - name: Update package index files
       dnf:
         update_cache: yes
@@ -26,3 +22,7 @@
       dnf:
         name: powershell
         state: present
+    - name: Remove the Microsoft RedHat repository package file
+      file:
+        path: /etc/yum.repos.d/microsoft-prod.repo
+        state: absent
