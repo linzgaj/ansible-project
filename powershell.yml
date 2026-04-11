@@ -3,17 +3,21 @@
   become: yes
   name: Install PowerShell on web1
   tasks:
+    - name: Install the Microsoft RedHat repository GPG keys
+      rpm_key:
+        state: present
+        key: https://packages.microsoft.com/keys/microsoft.asc
     - name: Download the Microsoft RedHat repository package
       get_url:
-        url: https://packages.microsoft.com/config/rhel/9/packages-microsoft-prod.rpm
-        dest: /tmp/packages-microsoft-prod.rpm
+        url: https://packages.microsoft.com/config/fedora/38/prod.repo
+        dest: /etc/yum.repos.d/microsoft-prod.repo
     - name: Install the Microsoft RedHat repository package
       dnf:
-        name: /tmp/packages-microsoft-prod.rpm
+        name: /etc/yum.repos.d/microsoft-prod.repo
         state: present
-    - name: Delete the downloaded package after installing
+    - name: Remove the Microsoft RedHat repository package file
       file:
-        path: /tmp/packages-microsoft-prod.rpm
+        path: /etc/yum.repos.d/microsoft-prod.repo
         state: absent
     - name: Update package index files
       dnf:
