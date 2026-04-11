@@ -1,0 +1,24 @@
+---
+- hosts: 10.0.1.69
+  become: yes
+  name: Install PowerShell on web1
+  tasks:
+    - name: Download the Microsoft RedHat repository package
+      get_url:
+        url: https://packages.microsoft.com/config/rhel/9/packages-microsoft-prod.rpm
+        dest: /tmp/packages-microsoft-prod.rpm
+    - name: Install the Microsoft RedHat repository package
+      apt_rpm:
+        name: /tmp/packages-microsoft-prod.rpm
+        state: present
+    - name: Delete the downloaded package after installing
+      file:
+        path: /tmp/packages-microsoft-prod.rpm
+        state: absent
+    - name: Update package index files
+      dnf:
+        update_cache: yes
+    - name: Install PowerShell
+      dnf:
+        name: powershell
+        state: present
