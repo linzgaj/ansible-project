@@ -1,0 +1,4 @@
+# vars.yml
+---
+username: kayla
+password: "{{ 'Pa$$w0rd1' | password_hash('sha512') }}"

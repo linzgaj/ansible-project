@@ -1,0 +1,12 @@
+---
+  - hosts: c1
+    become: yes
+    vars_files:
+      - vars.yml
+    tasks:
+      - name: Ensure user {{ username }} exists
+        user:
+          name: "{{ username }}"
+          password: "{{ password }}"
+          update_password: on_create
+          state: present
